@@ -87,48 +87,6 @@ struct TitleView: View {
     }
 }
 
-/// Thom McAn 鞋盒的盒盖：旧纸板、一圈压痕、记号笔写的字，一截透明胶带
-struct ShoeboxLid: View {
-    let label: String
-    var labelColor = Color(hex: 0x1E1B18)
-
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 6)
-                .fill(LinearGradient(colors: [Color(hex: 0xC9A574), Color(hex: 0xA9824F)], startPoint: .topLeading, endPoint: .bottomTrailing))
-            RoundedRectangle(cornerRadius: 4)
-                .stroke(Color(hex: 0x7A5A33, alpha: 0.55), lineWidth: 2)
-                .padding(10)
-            GrainOverlay(opacity: 0.18)
-                .clipShape(RoundedRectangle(cornerRadius: 6))
-            VStack(spacing: 2) {
-                Text("Thom McAn")
-                    .font(.custom("Bradley Hand", size: 15).weight(.bold))
-                    .foregroundStyle(Color(hex: 0x7E2A1C, alpha: 0.7))
-                Text("SIZE 10½  ·  BLACK OXFORD")
-                    .font(Fonts.typewriter(8))
-                    .tracking(1)
-                    .foregroundStyle(Color(hex: 0x4A3520, alpha: 0.6))
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .padding(.top, 22)
-            .padding(.leading, 26)
-            Text(label)
-                .font(Fonts.marker(52))
-                .foregroundStyle(labelColor.opacity(0.9))
-                .rotationEffect(.degrees(-3))
-                .offset(y: 16)
-            Rectangle()
-                .fill(Color(hex: 0xF3EBD2, alpha: 0.35))
-                .frame(width: 110, height: 24)
-                .rotationEffect(.degrees(12))
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                .offset(x: 20, y: -6)
-        }
-        .shadow(color: .black.opacity(0.55), radius: 22, y: 12)
-    }
-}
-
 struct TitleMenuItem: View {
     let title: String
     let detail: String?

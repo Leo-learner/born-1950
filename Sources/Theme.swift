@@ -80,11 +80,20 @@ extension EnvironmentValues {
 
 /// 正文宋体，信件和公文仿宋，界面小字苹方，英文标牌打字机体，鞋盒上的字是记号笔
 enum Fonts {
-    static func body(_ size: CGFloat) -> Font { .custom("Songti SC", size: size) }
-    static func bodyBold(_ size: CGFloat) -> Font { .custom("Songti SC", size: size).weight(.bold) }
-    static func display(_ size: CGFloat) -> Font { .custom("Songti SC", size: size).weight(.black) }
+    /// 宋体和仿宋能不能用。Mac 上一直是 true。
+    /// iOS 上这两种是按需下载的字体，下载/激活完成前是 false，这期间显式改用苹方——
+    /// 不能先拿 "Songti SC" 去要字：SwiftUI 会把"要不到、退回苹方"的结果按字体描述缓存起来，
+    /// 字体到位以后同样描述的文字照旧是苹方。
+    nonisolated(unsafe) static var serifReady = true
+
+    private static var serif: String { serifReady ? "Songti SC" : "PingFang SC" }
+    private static var fangsong: String { serifReady ? "STFangsong" : "PingFang SC" }
+
+    static func body(_ size: CGFloat) -> Font { .custom(serif, size: size) }
+    static func bodyBold(_ size: CGFloat) -> Font { .custom(serif, size: size).weight(.bold) }
+    static func display(_ size: CGFloat) -> Font { .custom(serif, size: size).weight(.black) }
     static func ui(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font { .custom("PingFang SC", size: size).weight(weight) }
-    static func doc(_ size: CGFloat) -> Font { .custom("STFangsong", size: size) }
+    static func doc(_ size: CGFloat) -> Font { .custom(fangsong, size: size) }
     static func typewriter(_ size: CGFloat) -> Font { .custom("American Typewriter", size: size) }
     static func mono(_ size: CGFloat) -> Font { .custom("Courier New", size: size) }
     static func marker(_ size: CGFloat) -> Font { .custom("Marker Felt", size: size) }
