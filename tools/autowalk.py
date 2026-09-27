@@ -2,6 +2,7 @@
 """把攻略文件往前推：遇到只有"继续"的节点自动补"继续"，遇到抉择节点查 choices 表；表里没有就停下来列出选项。
 用法：tools/autowalk.py tests/true_ending.walk choices.txt
 choices.txt 每行：节点id = 选项文字片段
+（网页版分支用 node tools/walk.mjs 走攻略；Mac 版分支上是 build/Born1950 -walk，输出格式一样）
 """
 import subprocess, sys, re
 walk, table = sys.argv[1], sys.argv[2]
@@ -12,7 +13,7 @@ for line in open(table, encoding='utf-8'):
     k, v = line.split('=', 1)
     picks[k.strip()] = v.strip()
 for _ in range(600):
-    out = subprocess.run(['build/Born1950', '-walk', walk, '-story', 'story'], capture_output=True, text=True).stdout
+    out = subprocess.run(['node', 'tools/walk.mjs', walk, '-story', 'story'], capture_output=True, text=True).stdout
     lines = out.strip().split('\n')
     stop = [l for l in lines if l.startswith('停在：')]
     fail = [l for l in lines if l.startswith('✘')]

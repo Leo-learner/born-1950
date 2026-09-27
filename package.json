@@ -1,0 +1,15 @@
+{
+  "name": "born-1950-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "生于一九五〇 · 鞋盒里的美国 —— 网页版",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "check": "node tools/check.mjs story -runs 2000",
+    "walk": "node tools/walk.mjs tests/true_ending.walk -expect e34",
+    "test": "node --test tests/engine.test.mjs",
+    "serve": "node tools/serve.mjs"
+  }
+}
